@@ -1,4 +1,4 @@
-
+const { NotImplementedError } = require('../extensions/index.js');
 
 /**
  * Create name of dream team based on the names of its members
@@ -9,31 +9,23 @@
  *
  * @example
  * 
- createDreamTeam(['Matt', 'Ann', 'Dmitry', 'Max']) => 'ADMM'
+ * createDreamTeam(['Matt', 'Ann', 'Dmitry', 'Max']) => 'ADMM'
  * createDreamTeam(['Olivia', 1111, 'Lily', 'Oscar', true, null]) => 'LOO'
  *
  */
-
-function createDreamTeam(members) {
-
-  if (Array.isArray(members) == false) {
-    return false
-  }
-
-  let element = []
-
-  members.map((i => {
-
-    if (typeof i == "string") {
-      let trim = i.trim();
-      element.push(trim.toUpperCase()[0])
-      element.sort()
-    }
-
-  }))
-  let result = element.join('');
-  return result
+ function createDreamTeam(members) {
+  if (Array.isArray(members)) {
+    return members
+      .reduce((acc, curr) => {
+        if (typeof curr === "string") {
+          return [...acc, curr.trim().charAt(0).toUpperCase()];
+        } else return acc;
+      }, [])
+      .sort()
+      .join("");
+  } else return false;
 }
+
 module.exports = {
   createDreamTeam
 };
